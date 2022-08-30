@@ -1,35 +1,15 @@
-//import express from 'express';
-//import cors from 'cors';
+import express from 'express';
+import cors from 'cors';
+import { tripsRouter } from './src/routers/trips-router.js';
 
-import mysql from 'mysql';
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-const connection = mysql.createConnection({
-  host: 'rds-mysql-tripsestimator.cqcq1fbhm4jq.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'jonathanvegas',
-  database: 'dbtripsestimator',
+const PORT = 5001;
+
+app.use('/', tripsRouter )
+
+app.listen(PORT, () => {
+  console.log("Listening in port ", PORT);
 });
-
-connection.connect(function(err) {
-  if (err) {
-    console.error('Database connection failed: ' + err.stack);
-    return;
-  }
-
-  console.log('Connected to database.');
-});
-
-connection.query('SELECT * FROM tb_tripsInfo WHERE user_id = "jonveg"', 
-function (err, res, fields) {
-  if (err) {
-    console.error('Query error: ' + err.message);
-    return;
-  }
-  //console.log(res)
-  Object.keys(res).forEach(function(key) {
-    let row = res[key];
-    console.log(row.zipOrigin) 
-  });
-});
-
-connection.end();
