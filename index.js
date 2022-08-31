@@ -8,7 +8,7 @@ app.use(express.json());
 
 const PORT = 5001;
 
-app.use('/', tripsRouter )
+app.use('/trips', tripsRouter )
 
 app.listen(PORT, () => {
   console.log("Listening in port ", PORT);
