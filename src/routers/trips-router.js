@@ -1,5 +1,5 @@
 import { Router} from 'express';
-import { getDataTrips, getDataTripsUser, getDataTripsUserDates , insertTrip, updateTripUser } from '../services/api-sql.js';
+import { getDataTrips, getDataTripsUser, getDataTripsUserDates , insertTrip, updateTripUser, getZipCodes } from '../services/api-sql.js';
 
 export const tripsRouter = Router();
 
@@ -46,5 +46,15 @@ tripsRouter.patch('/:trips_id', async (req, res) => {
     res.status(200).send(dataSource);
   } catch(err){
     console.error('Error while updating information ', err.message);
+  }
+});
+
+tripsRouter.get('/zipCode/:zipCode', async (req, res) => {
+  try {
+    console.log(req.params.zipCode)
+    const dataSource = await getZipCodes(req.params.zipCode, res);
+    res.status(200).send(dataSource);
+  } catch(err){
+    console.error('Error while getting information ', err.message);
   }
 });
