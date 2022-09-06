@@ -20,13 +20,18 @@ export const getDataTrips =  async (res) => {
  }; 
 
 export const insertTrip = async (newTrip) => {
-  let sql = `INSERT INTO tb_tripsInfo (user_id, zipOrigin, cityOrigin, zipDestination, cityDestination, ` + 
-            `tripMiles, status, date) VALUES ('${newTrip.user_id}', '${newTrip.zipOrigin}', '${newTrip.cityOrigin}', ` +
-            `'${newTrip.zipDestination}', '${newTrip.cityDestination}', ${newTrip.tripMiles}, '${newTrip.status}', ` +
-            `'${newTrip.date}')`;
-  console.log(sql)
-  const [rows,fields] =  await connection.query(sql); 
-  return rows;
+  try{
+    let sql = `INSERT INTO tb_tripsInfo (user_id, zipOrigin, cityOrigin, zipDestination, cityDestination, ` + 
+              `tripMiles, status, date) VALUES ('${newTrip.user_id}', '${newTrip.zipOrigin}', '${newTrip.cityOrigin}', ` +
+              `'${newTrip.zipDestination}', '${newTrip.cityDestination}', ${newTrip.tripMiles}, '${newTrip.status}', ` +
+              `'${newTrip.date}')`;
+    console.log(sql)
+    const [rows,fields] =  await connection.query(sql); 
+    return rows;
+  }
+  catch{
+    console.log(error);
+  }
 }  
 
 export const updateTripUser = async (trips_id, newTrip) => {
