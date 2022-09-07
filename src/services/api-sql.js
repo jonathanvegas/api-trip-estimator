@@ -14,7 +14,7 @@ export const getDataTrips =  async (res) => {
  };
  
  export const getDataTripsUserDates =  async (user_id, fromDate, toDate, trips) => {
-  let sql = `SELECT * FROM tb_tripsInfo WHERE user_id = '${user_id}' AND date BETWEEN '${fromDate}' AND '${toDate}'`;
+  let sql = `SELECT *, DATE_FORMAT(date, "%m-%d-%Y") as dateFormat FROM tb_tripsInfo WHERE user_id = '${user_id}' AND date BETWEEN '${fromDate}' AND '${toDate}'`;
   const [rows,fields] =  await connection.query(sql); 
   return rows;
  }; 
@@ -22,9 +22,9 @@ export const getDataTrips =  async (res) => {
 export const insertTrip = async (newTrip) => {
   try{
     let sql = `INSERT INTO tb_tripsInfo (user_id, zipOrigin, cityOrigin, zipDestination, cityDestination, ` + 
-              `tripMiles, status, date) VALUES ('${newTrip.user_id}', '${newTrip.zipOrigin}', '${newTrip.cityOrigin}', ` +
+              `tripMiles, status, date, rate) VALUES ('${newTrip.user_id}', '${newTrip.zipOrigin}', '${newTrip.cityOrigin}', ` +
               `'${newTrip.zipDestination}', '${newTrip.cityDestination}', ${newTrip.tripMiles}, '${newTrip.status}', ` +
-              `'${newTrip.date}')`;
+              `'${newTrip.date}', ${newTrip.rate})`;
     console.log(sql)
     const [rows,fields] =  await connection.query(sql); 
     return rows;
