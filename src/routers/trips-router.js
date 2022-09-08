@@ -1,5 +1,5 @@
 import { Router} from 'express';
-import { getDataTrips, getDataTripsUser, getDataTripsUserDates , insertTrip, updateTripUser, getZipCodes } from '../services/api-sql.js';
+import { getDataTrips, getDataTripsUser, getDataTripsUserDates , insertTrip, updateTripUser, getZipCodes, deleteTripId } from '../services/api-sql.js';
 
 export const tripsRouter = Router();
 
@@ -55,11 +55,21 @@ tripsRouter.patch('/:trips_id', async (req, res) => {
 
 tripsRouter.get('/zipCode/:zipCode', async (req, res) => {
   try {
-    console.log(req.params.zipCode)
     const dataSource = await getZipCodes(req.params.zipCode, res);
     res.status(200).send(dataSource);
   } catch(err){
     res.status(400).send(err);
     console.error('Error while getting information ', err.message);
+  }
+});
+
+tripsRouter.delete('/delete/:trips_id', async (req, res) => {
+  try {
+    console.log(req.params.trips_id);
+    const dataSource = await deleteTripId(req.params.trips_id, res);
+    res.status(200).send(dataSource);
+  } catch(err){
+    res.status(500).send(err);
+    console.error('Error while deleting information ', err.message);
   }
 });

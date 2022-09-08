@@ -35,15 +35,22 @@ export const insertTrip = async (newTrip) => {
 }  
 
 export const updateTripUser = async (trips_id, newTrip) => {
-  //console.log(newTrip)
   let sql = `UPDATE tb_tripsInfo SET zipOrigin = '${newTrip.zipOrigin}', cityOrigin = '${newTrip.cityOrigin}', ` + 
             `zipDestination = '${newTrip.zipDestination}', cityDestination = '${newTrip.cityDestination}', ` + 
-            `tripMiles = ${newTrip.tripMiles}, status = '${newTrip.status}', date = '${newTrip.date}' ` +
-            `WHERE trips_id = ${trips_id}`;
+            `tripMiles = ${newTrip.tripMiles}, status = '${newTrip.status}', date = '${newTrip.date}', ` +
+            `rate = ${newTrip.rate} WHERE trips_id = ${trips_id}`;
   console.log(sql)
   const [rows,fields] =  await connection.query(sql); 
   return rows;
 }  
+
+export const deleteTripId =  async (trips_id, trips) => {
+  console.log(trips_id);
+  let sql = `DELETE FROM tb_tripsInfo WHERE trips_id = ${trips_id}`;
+  const [rows,fields] =  await connection.query(sql); 
+  console.log(sql)
+  return rows;
+ };
 
 export const getZipCodes = async (zipCode, res) => {
   let sql = `SELECT * from tb_zipCodes WHERE zipCode = '${zipCode}'`;
@@ -57,19 +64,6 @@ export const TripServices = {
   getDataTripsUserDates,
   insertTrip,
   updateTripUser,
+  deleteTripId,
   getZipCodes
 };
-
-
-// connection.query('SELECT * FROM tb_tripsInfo', 
-// function (err, res, fields) {
-//   if (err) {
-//     console.error('Query error: ' + err.message);
-//     return;
-//   }
-//   console.log(res)
-//   Object.keys(res).forEach(function(key) {
-//     let row = res[key];
-//     console.log(row.zipOrigin) 
-//   });
-// });
