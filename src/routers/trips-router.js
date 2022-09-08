@@ -41,7 +41,7 @@ tripsRouter.post('/', async function(req, res) {
   }
 });
 
-tripsRouter.patch('/:trips_id', async (req, res) => {
+tripsRouter.patch('/update/:trips_id', async (req, res) => {
   try {
     console.log(res);
     console.log(req.params.trips_id)
