@@ -34,7 +34,7 @@ export const insertTrip = async (newTrip) => {
   }
 }  
 
-export const updateTripUser = async (trips_id, newTrip) => {
+export const updateTripUser = async (trips_id, newTrip, res) => {
   let sql = `UPDATE tb_tripsInfo SET zipOrigin = '${newTrip.zipOrigin}', cityOrigin = '${newTrip.cityOrigin}', ` + 
             `zipDestination = '${newTrip.zipDestination}', cityDestination = '${newTrip.cityDestination}', ` + 
             `tripMiles = ${newTrip.tripMiles}, status = '${newTrip.status}', date = '${newTrip.date}', ` +
@@ -45,7 +45,6 @@ export const updateTripUser = async (trips_id, newTrip) => {
 }  
 
 export const deleteTripId =  async (trips_id, trips) => {
-  console.log(trips_id);
   let sql = `DELETE FROM tb_tripsInfo WHERE trips_id = ${trips_id}`;
   const [rows,fields] =  await connection.query(sql); 
   console.log(sql)

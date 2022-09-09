@@ -43,9 +43,7 @@ tripsRouter.post('/', async function(req, res) {
 
 tripsRouter.patch('/update/:trips_id', async (req, res) => {
   try {
-    console.log(res);
-    console.log(req.params.trips_id)
-    const dataSource = await updateTripUser(req.params.trips_id, res);
+    const dataSource = await updateTripUser(req.params.trips_id, req.body, res);
     res.status(200).send(dataSource);
   } catch(err){
     res.status(400).send(err);
@@ -59,13 +57,12 @@ tripsRouter.get('/zipCode/:zipCode', async (req, res) => {
     res.status(200).send(dataSource);
   } catch(err){
     res.status(400).send(err);
-    console.error('Error while getting information ', err.message);
+    console.error('Error while getting information Zip Code', err.message);
   }
 });
 
 tripsRouter.delete('/delete/:trips_id', async (req, res) => {
   try {
-    console.log(req.params.trips_id);
     const dataSource = await deleteTripId(req.params.trips_id, res);
     res.status(200).send(dataSource);
   } catch(err){
